@@ -362,6 +362,98 @@
         margin: -1.5rem -1.5rem 1rem -1.5rem;
       }
     }
+
+
+    /* Container for PDF and controls */
+#pdf-container {
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1000px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* PDF canvas */
+canvas {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  max-width: 90%;
+  height: 600px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+canvas:hover {
+  transform: scale(1.01);
+}
+
+/* Controls container */
+#controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+	
+}
+
+/* Buttons */
+button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+button:active {
+  background-color: #00408d;
+}
+
+/* PDF render container */
+#pdf-render {
+  width: 85%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  height: auto;
+  margin: 0 auto;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.download-btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+	content-align: center;
+}
+
+.download-btn:hover {
+  background-color: #1e7e34;
+  transform: translateY(-2px);
+}
+
+.download-btn:active {
+  background-color: #155724;
+}
   </style>
 </head>
 <body class="min-h-screen">
@@ -675,6 +767,61 @@
     </div>
     <p class="text-center text-gray-500 mt-8 text-sm">© 2025 NIT Jalandhar. All rights reserved.</p>
   </footer>
+  
+  <div id="pdf-container">
+    <canvas id="pdf-render"></canvas>
+    <div id="controls">
+      <button id="prev-page">Previous</button>
+      <span>Page: <span id="page-num">1</span> / <span id="page-count">?</span></span>
+      <button id="next-page">Next</button>
+	     <a href="pdf/schedule.pdf" download class="download-btn">Download PDF</a>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <script>
+    const url = 'pdfs/schedule.pdf';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+    let pdfDoc = null,
+        pageNum = 1,
+        canvas = document.getElementById('pdf-render'),
+        ctx = canvas.getContext('2d');
+
+    function renderPage(num) {
+      pdfDoc.getPage(num).then(function(page) {
+        const viewport = page.getViewport({ scale: 1.5 });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        page.render(renderContext).promise.then(function () {
+          document.getElementById('page-num').textContent = num;
+        });
+      });
+    }
+
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      document.getElementById('page-count').textContent = pdfDoc.numPages;
+      renderPage(pageNum);
+    });
+
+    document.getElementById('next-page').addEventListener('click', function () {
+      if (pageNum >= pdfDoc.numPages) return;
+      pageNum++;
+      renderPage(pageNum);
+    });
+
+    document.getElementById('prev-page').addEventListener('click', function () {
+      if (pageNum <= 1) return;
+      pageNum--;
+      renderPage(pageNum);
+    });
+  </script>
 
   <script>
     // Mobile navigation toggle
