@@ -111,37 +111,37 @@ body {
     gap: 1.5rem;
   }
   .speaker-card {
-    background: black ;
-    width: 320px;
-    height: 480px;
-    border-radius: 8px;
-    text-align: center;
-    padding: 0.5rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .speaker-card img {
-    width: 320px;
-    height: 450px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-  }
-  .speaker-card h3 {
-    margin: 0.2rem 0 0.1rem;
-    font-size: 1.2rem;
-    color: black;
-    font-weight: bold;
-  }
-  .speaker-card p {
-    margin: 0;
-    font-size: 1rem;
-    color: rgb(46, 45, 45);
-    font-weight: bold;
-  }
+  background: #fff;
+      width: 320px;
+      height: 480px;
+      border-radius: 8px;
+      text-align: center;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .speaker-card img {
+      width: 320px;
+      height: 450px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    .speaker-card h3 {
+      margin: 0.2rem 0 0.1rem;
+      font-size: 1.5rem;
+	  color: black;
+	  font-weight:bold ;
+    }
+    .speaker-card p {
+      margin: 0;
+      font-size: 1.5rem;
+	  color: rgb(46, 45, 45)
+	  font-weight: bold;
+    }
   .profile-card {
     width: 220px;
     padding: 1rem;
