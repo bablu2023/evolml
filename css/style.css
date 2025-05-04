@@ -125,7 +125,7 @@ body {
     }
     .speaker-card img {
       width: 280px;
-      height: 420px;
+      height: 275px;
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 0.5rem;
