@@ -715,24 +715,71 @@ button:active {
     </div>
   </section>
 
-  <!-- Schedule (PDF Viewer) -->
-  <section class="py-12 px-4" id="schedule" role="region" aria-labelledby="schedule">
-    <div class="max-w-6xl mx-auto">
-      <h2 id="schedule" class="text-4xl font-bold text-gray-900 mb-8 text-center tracking-tight">Schedule</h2>
-      <div id="pdf-container">
-        <canvas id="pdf-render" aria-describedby="pdf-description"></canvas>
-        <div id="controls">
-          <button id="prev-page" class="cta-button" aria-label="Previous page">Previous</button>
-          <span>Page: <span id="page-num">1</span> / <span id="page-count">?</span></span>
-          <button id="next-page" class="cta-button" aria-label="Next page">Next</button>
-          <a href="pdfs/schedule.pdf" download class="download-btn">Download PDF</a>
-        </div>
-        <p id="error-message" class="hidden">Error loading PDF. Please try downloading the file.</p>
-        <p id="pdf-description" class="sr-only">PDF viewer displaying the schedule for Summer School on EVOML 2025</p>
-      </div>
+   
+  <div id="pdf-container">
+    <canvas id="pdf-render"></canvas>
+    <div id="controls">
+      <button id="prev-page">Previous</button>
+      <span>Page: <span id="page-num">1</span> / <span id="page-count">?</span></span>
+      <button id="next-page">Next</button>
+	     <a href="pdf/schedule.pdf" download class="download-btn">Download PDF</a>
     </div>
-  </section>
+  </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <script>
+    const url = 'pdfs/schedule.pdf';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+    let pdfDoc = null,
+        pageNum = 1,
+        canvas = document.getElementById('pdf-render'),
+        ctx = canvas.getContext('2d');
+
+    function renderPage(num) {
+      pdfDoc.getPage(num).then(function(page) {
+        const viewport = page.getViewport({ scale: 1.5 });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        page.render(renderContext).promise.then(function () {
+          document.getElementById('page-num').textContent = num;
+        });
+      });
+    }
+
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+      pdfDoc = pdfDoc_;
+      document.getElementById('page-count').textContent = pdfDoc.numPages;
+      renderPage(pageNum);
+    });
+
+    document.getElementById('next-page').addEventListener('click', function () {
+      if (pageNum >= pdfDoc.numPages) return;
+      pageNum++;
+      renderPage(pageNum);
+    });
+
+    document.getElementById('prev-page').addEventListener('click', function () {
+      if (pageNum <= 1) return;
+      pageNum--;
+      renderPage(pageNum);
+    });
+  </script>
+
+  <script>
+    // Mobile navigation toggle
+    document.querySelector('.nav-toggle').addEventListener('click', () => {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+      const isExpanded = navLinks.classList.contains('active');
+      document.querySelector('.nav-toggle').setAttribute('aria-expanded', isExpanded);
+    });
+  </script>
   <div class="bg-pattern"></div>
 
   <!-- Main Content -->
