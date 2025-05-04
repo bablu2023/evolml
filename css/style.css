@@ -124,21 +124,21 @@ body {
       align-items: center;
     }
     .speaker-card img {
-      width: 280px;
-      height: 275px;
+      width: 250px;
+      height: 265px;
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 0.5rem;
     }
     .speaker-card h3 {
       margin: 0.2rem 0 0.1rem;
-      font-size: 1.2rem;
+      font-size: 1rem;
 	  color: black;
 	  font-weight:bold ;
     }
     .speaker-card p {
       margin: 0;
-      font-size: 1rem;
+      font-size: 0.75rem;
 	  color: rgb(46, 45, 45)
 	  font-weight: bold;
     }
