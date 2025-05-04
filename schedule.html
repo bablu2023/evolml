@@ -27,45 +27,225 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.css">
+
   <style>
-    
-    #pdf-container {
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #ffffff;
+      color: #1f2937;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%231d4ed8" fill-opacity="0.05" fill-rule="evenodd"%3E%3Cpath d="M0 40L40 0H20L0 20zM40 40H20L40 20z"/%3E%3C/g%3E%3C/svg%3E');
+      z-index: -1;
+    }
+    .nav-bar {
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+    }
+    .navbar-brand {
+      color: black;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-links {
       display: flex;
-      flex-direction: column;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links li a {
+      color: black;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-links li a:hover {
+      color: #4b5563;
+    }
+    .nav-toggle {
+      display: none;
+      color: black;
+      font-size: 1.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .header-image {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+    }
+    .header-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .header-image .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
       align-items: center;
-      padding: 1.5rem;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    .header-image .overlay h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .speaker-card, .profile-card, .department-card, .student-card {
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
       background: #ffffff;
       border: 2px solid transparent;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(45deg, #1d4ed8, #06b6d4) border-box;
-      max-width: 100%;
-      margin: 0 auto;
+      animation: fadeIn 0.6s ease-out;
+      text-align: center;
+      padding: 1.5rem;
     }
-    #pdf-render {
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      max-width: 100%;
+    .speaker-card:hover, .profile-card:hover, .department-card:hover, .student-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
     }
-    #controls {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
+    .speaker-card img, .profile-card img, .department-card img, .student-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
     }
-    #controls span {
+    .speaker-card h3, .profile-card h3, .department-card h3, .student-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.5rem;
+    }
+    .speaker-card p, .profile-card p, .department-card p, .student-card p {
       font-size: 1rem;
+      color: #4b5563;
+      margin: 0;
+      margin-bottom: 0.25rem;
+    }
+    .info-card {
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      background: #ffffff;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(45deg, #1d4ed8, #06b6d4) border-box;
+      animation: fadeIn 0.6s ease-out;
+    }
+    .info-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+    }
+    .info-card h2 {
+      background: linear-gradient(90deg, #1e40af, #0ea5e9);
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 10px;
+      text-align: center;
+      margin: -2rem -2rem 1rem -2rem;
+      border-radius: 12px 12px 0 0;
+    }
+    .info-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: justify;
       color: #1f2937;
     }
-    #error-message {
-      color: #dc2626;
-      font-size: 1rem;
+    .fee-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 300px;
+    }
+    .fee-table th, .fee-table td {
+      border: 1px solid #d1d5db;
+      padding: 16px;
       text-align: center;
-      margin-top: 1rem;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+    .fee-table th {
+      background: linear-gradient(90deg, #1d4ed8, #06b6d4);
+      color: white;
+      font-weight: 600;
+    }
+    .fee-table tr:nth-child(even) {
+      background: #f9fafb;
+    }
+    .fee-table tr:hover {
+      background: #e0f2fe;
+      position: relative;
+    }
+    .fee-table tr:hover::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #06b6d4;
+    }
+    .cta-button {
+      background: linear-gradient(90deg, #1d4ed8, #06b6d4);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      animation: pulse 2s infinite;
+    }
+    .cta-button:hover {
+      background: linear-gradient(90deg, #1e40af, #0ea5e9);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+    .cta-button:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.3);
+    }
+    .link-button {
+      color: #1d4ed8;
+      font-weight: 500;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .link-button:hover {
+      color: #06b6d4;
+      transform: translateY(-1px);
+    }
+    .social-icon {
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .social-icon:hover {
+      transform: translateY(-3px);
+      color: #06b6d4;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(15px); }
@@ -118,19 +298,9 @@
       .text-lg {
         font-size: 1.125rem;
       }
-      .cta-button, .download-btn {
+      .cta-button {
         padding: 12px 24px;
         font-size: 1rem;
-      }
-      #pdf-container {
-        padding: 1rem;
-      }
-      #pdf-render {
-        max-width: 100%;
-      }
-      #controls {
-        flex-direction: column;
-        gap: 0.5rem;
       }
       .fee-table {
         display: block;
@@ -183,7 +353,7 @@
         font-size: 0.95rem;
         padding: 12px;
       }
-      .cta-button, .download-btn {
+      .cta-button {
         padding: 10px 20px;
         font-size: 0.95rem;
       }
@@ -191,11 +361,9 @@
         font-size: 1.25rem;
         margin: -1.5rem -1.5rem 1rem -1.5rem;
       }
-      #pdf-container {
-        padding: 0.75rem;
-      }
     }
-    
+
+
     /* Container for PDF and controls */
 #pdf-container {
   text-align: center;
@@ -301,7 +469,7 @@ button:active {
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html" class="active">About</a></li>
         <li><a href="#registration-link">Registration</a></li>
-        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#schedule" target="_blank">Schedule</a></li>
         <li><a href="#">Poster</a></li>
         <li><a href="#">Accommodation</a></li>
         <li><a href="#">Live</a></li>
@@ -311,257 +479,13 @@ button:active {
 
   <!-- Header Image -->
   <section class="header-image" role="img" aria-label="Summer School on EVOML 2025 Banner">
-    <img src="https://via.placeholder.com/1200x400" alt="Summer School on EVOML 2025 conference banner">
+    <img src="images/header1.png" alt="Summer School on EVOML 2025 conference banner">
     <div class="overlay">
       <h1>Summer School on EVOML 2025</h1>
     </div>
   </section>
 
-  <!-- Keynote Speakers -->
-  <section class="py-12 px-4" id="keynote" role="region" aria-labelledby="keynote-speakers">
-    <div class="max-w-6xl mx-auto">
-      <h2 id="keynote-speakers" class="text-4xl font-bold text-gray-900 mb-8 text-center tracking-tight">Keynote Speakers</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Speaker 1 -->
-        <article class="speaker-card">
-          <img src="w_files/lipo wang.jpg" alt="Stephen J. Wright, keynote speaker">
-          <h3>Stephen J. Wright</h3>
-          <p>Nanyang Technological University</p>
-          <p>Singapore</p>
-        </article>
-        <!-- Speaker 2 -->
-        <article class="speaker-card">
-          <img src="w_files/donghwi jung.jpeg" alt="Dr. Donghwi Jung, keynote speaker">
-          <h3>Dr. Donghwi Jung</h3>
-          <p>Korea University</p>
-          <p>Korea</p>
-        </article>
-        <!-- Speaker 3 -->
-        <article class="speaker-card">
-          <img src="w_files/swagatam das.jpg" alt="Dr. Swagatam Das, keynote speaker">
-          <h3>Dr. Swagatam Das</h3>
-          <p>Indian Statistical Institute</p>
-          <p>Kolkata</p>
-        </article>
-        <!-- Speaker 4 -->
-        <article class="speaker-card">
-          <img src="w_files/2388-Dr. Shubham Photo.jpg" alt="Andrés L. Medaglia, keynote speaker">
-          <h3>Andrés L. Medaglia</h3>
-          <p>Universidad de los Andes (Colombia)</p>
-          <p>Colombia</p>
-        </article>
-        <!-- Speaker 5 -->
-        <article class="speaker-card">
-          <img src="w_files/bapi dutta.jpeg" alt="Dr. Bapi Dutta, keynote speaker">
-          <h3>Dr. Bapi Dutta</h3>
-          <p>University of Jaen</p>
-          <p>Jaen, Spain</p>
-        </article>
-        <!-- Speaker 6 -->
-        <article class="speaker-card">
-          <img src="w_files/indu bala.jpg" alt="Dr. Indu Bala, keynote speaker">
-          <h3>Dr. Indu Bala</h3>
-          <p>University of Adelaide</p>
-          <p>Australia</p>
-        </article>
-        <!-- Speaker 7 -->
-        <article class="speaker-card">
-          <img src="w_files/manoj thakur.jpg" alt="Dr. Manoj Thakur, keynote speaker">
-          <h3>Dr. Manoj Thakur</h3>
-          <p>Indian Institute of Technology</p>
-          <p>Mandi</p>
-        </article>
-        <!-- Speaker 8 -->
-        <article class="speaker-card">
-          <img src="w_files/JC bansal.jpg" alt="Dr. JC Bansal, keynote speaker">
-          <h3>Dr. JC Bansal</h3>
-          <p>South Asian University</p>
-        </article>
-        <!-- Speaker 9 -->
-        <article class="speaker-card">
-          <img src="w_files/2388-Dr. Shubham Photo.jpg" alt="Dr. Shubham Gupta, keynote speaker">
-          <h3>Dr. Shubham Gupta</h3>
-          <p>Motilal Nehru National Institute of Technology</p>
-          <p>Allahabad</p>
-        </article>
-        <!-- Speaker 10 -->
-        <article class="speaker-card">
-          <img src="w_files/dikshit.jpeg" alt="Dr. Dikshit Chauhan, keynote speaker">
-          <h3>Dr. Dikshit Chauhan</h3>
-          <p>National University of Singapore</p>
-          <p>Singapore</p>
-        </article>
-        <!-- Speaker 11 -->
-        <article class="speaker-card">
-          <img src="w_files/kedar nath.jpg" alt="Dr. Kedar Nath Das, keynote speaker">
-          <h3>Dr. Kedar Nath Das</h3>
-          <p>National Institute of Technology</p>
-          <p>Silchar</p>
-        </article>
-        <!-- Speaker 12 -->
-        <article class="speaker-card">
-          <img src="w_files/anupam sir.jpg" alt="Dr. Anupam Yadav, keynote speaker">
-          <h3>Dr. Anupam Yadav</h3>
-          <p>Dr B R Ambedkar National Institute of Technology</p>
-          <p>Jalandhar</p>
-        </article>
-        <!-- Speaker 13 -->
-        <article class="speaker-card">
-          <img src="w_files/op verma.jpg" alt="Dr. OP Verma, keynote speaker">
-          <h3>Dr. OP Verma</h3>
-          <p>Dr B R Ambedkar National Institute of Technology</p>
-          <p>Jalandhar</p>
-        </article>
-        <!-- Speaker 14 -->
-        <article class="speaker-card">
-          <img src="w_files/harish sharma.jpg" alt="Dr. Harish Sharma, keynote speaker">
-          <h3>Dr. Harish Sharma</h3>
-          <p>Rajasthan Technical University</p>
-          <p>Rajasthan</p>
-        </article>
-        <!-- Speaker 15 -->
-        <article class="speaker-card">
-          <img src="w_files/nilanjal dey (1).jpg" alt="Dr. Nilanjan Dey, keynote speaker">
-          <h3>Dr. Nilanjan Dey</h3>
-          <p>Techno International New Town</p>
-          <p>Kolkata</p>
-        </article>
-        <!-- Speaker 16 -->
-        <article class="speaker-card">
-          <img src="w_files/hemant kumar (1).jpg" alt="Dr. Hemant Kumar Singh, keynote speaker">
-          <h3>Dr. Hemant Kumar Singh</h3>
-          <p>University of New South Wales</p>
-          <p>Australia</p>
-        </article>
-        <!-- Speaker 17 -->
-        <article class="speaker-card">
-          <img src="w_files/carlos a..jpg" alt="Prof. Carlos A. Coello Coello, keynote speaker">
-          <h3>Prof. Carlos A. Coello Coello</h3>
-          <p>CINVESTAV-IPN</p>
-          <p>Mexico</p>
-        </article>
-        <!-- Speaker 18 -->
-        <article class="speaker-card">
-          <img src="w_files/abhishek gupta.jpg" alt="Dr. Abhishek Gupta, keynote speaker">
-          <h3>Dr. Abhishek Gupta</h3>
-          <p>Indian Institute of Technology</p>
-          <p>Goa</p>
-        </article>
-        <!-- Speaker 19 -->
-        <article class="speaker-card">
-          <img src="w_files/Efren.jpg" alt="Dr. Efrén Mezura-Montes, keynote speaker">
-          <h3>Dr. Efrén Mezura-Montes</h3>
-          <p>University of Veracruz</p>
-          <p>Mexico</p>
-        </article>
-      </div>
-    </div>
-  </section>
 
-  <!-- Organizing Committee -->
-  <section class="py-12 px-4" id="organizing-committee" role="region" aria-labelledby="organizing-committee">
-    <div class="max-w-6xl mx-auto">
-      <h2 id="organizing-committee" class="text-4xl font-bold text-gray-900 mb-8 text-center tracking-tight">Organizing Committee</h2>
-      <!-- Department Card -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="department-card">
-        <article class="department-card">
-          <img src="https://via.placeholder.com/150" alt="Department of Mathematics and Computing, NIT Jalandhar">
-          <h3>Department of Mathematics and Computing</h3>
-          <p>Dr B R Ambedkar National Institute of Technology Jalandhar, Punjab, India</p>
-        </article>
-      </div>
-      <!-- Researchers -->
-      <h3 class="text-2xl font-semibold text-gray-900 mt-8 mb-4 text-center">Researchers</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="student-cards">
-        <article class="student-card">
-          <img src="w_files/myphoto.jpg" alt="Bablu Kumar Sah, PhD Student">
-          <h3>Bablu Kumar Sah</h3>
-          <p>PhD Student</p>
-        </article>
-        <article class="student-card">
-          <img src="https://via.placeholder.com/150" alt="Student 2, Master's Student">
-          <h3>Student 2</h3>
-          <p>Master's Student</p>
-        </article>
-        <article class="student-card">
-          <img src="https://via.placeholder.com/150" alt="Student 3, Undergraduate Student">
-          <h3>Student 3</h3>
-          <p>Undergraduate Student</p>
-        </article>
-        <article class="student-card">
-          <img src="https://via.placeholder.com/150" alt="Student 4, Undergraduate Student">
-          <h3>Student 4</h3>
-          <p>Undergraduate Student</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-   
-  <div id="pdf-container">
-    <canvas id="pdf-render"></canvas>
-    <div id="controls">
-      <button id="prev-page">Previous</button>
-      <span>Page: <span id="page-num">1</span> / <span id="page-count">?</span></span>
-      <button id="next-page">Next</button>
-	     <a href="pdf/schedule.pdf" download class="download-btn">Download PDF</a>
-    </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-  <script>
-    const url = 'pdfs/schedule.pdf';
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-
-    let pdfDoc = null,
-        pageNum = 1,
-        canvas = document.getElementById('pdf-render'),
-        ctx = canvas.getContext('2d');
-
-    function renderPage(num) {
-      pdfDoc.getPage(num).then(function(page) {
-        const viewport = page.getViewport({ scale: 1.5 });
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-
-        const renderContext = {
-          canvasContext: ctx,
-          viewport: viewport
-        };
-        page.render(renderContext).promise.then(function () {
-          document.getElementById('page-num').textContent = num;
-        });
-      });
-    }
-
-    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-      pdfDoc = pdfDoc_;
-      document.getElementById('page-count').textContent = pdfDoc.numPages;
-      renderPage(pageNum);
-    });
-
-    document.getElementById('next-page').addEventListener('click', function () {
-      if (pageNum >= pdfDoc.numPages) return;
-      pageNum++;
-      renderPage(pageNum);
-    });
-
-    document.getElementById('prev-page').addEventListener('click', function () {
-      if (pageNum <= 1) return;
-      pageNum--;
-      renderPage(pageNum);
-    });
-  </script>
-
-  <script>
-    // Mobile navigation toggle
-    document.querySelector('.nav-toggle').addEventListener('click', () => {
-      const navLinks = document.querySelector('.nav-links');
-      navLinks.classList.toggle('active');
-      const isExpanded = navLinks.classList.contains('active');
-      document.querySelector('.nav-toggle').setAttribute('aria-expanded', isExpanded);
-    });
-  </script>
   <div class="bg-pattern"></div>
 
   <!-- Main Content -->
@@ -627,24 +551,44 @@ button:active {
     </div>
   </section>
 
-  <!-- Footer -->
+
+  
+  <div id="pdf-container">
+    <canvas id="pdf-render"></canvas>
+    <div id="controls">
+      <button id="prev-page">Previous</button>
+      <span>Page: <span id="page-num">1</span> / <span id="page-count">?</span></span>
+      <button id="next-page">Next</button>
+	     <a href="pdf/schedule.pdf" download class="download-btn">Download PDF</a>
+    </div>
+  </div>
+ <!-- Footer -->
   <footer class="bg-gray-50 py-12 px-4 relative">
     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#1d4ed8] to-[#06b6d4]"></div>
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-gray-600">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-gray-600">
       <div>
-        <img src="https://via.placeholder.com/48" alt="NIT Jalandhar Logo" class="h-12 mb-4" aria-label="NIT Jalandhar Logo">
+        <img src="images/nitj.png" alt="NIT Jalandhar Logo" class="h-12 mb-4" aria-label="NIT Jalandhar Logo">
         <p>Dr B R Ambedkar National Institute of Technology</p>
         <p>Jalandhar, Punjab, India</p>
       </div>
       <div>
         <h3 class="text-lg font-medium mb-4">Contact Us</h3>
-        <p>Email: <a href="mailto:info@nitj.ac.in" class="link-button">info@nitj.ac.in</a></p>
-        <p>Phone: +91-181-2690301</p>
+        <p>Dr. Anupam Yadav<br>
+            Associate Professor<br>
+            Department of Mathematics<br>
+            Dr B. R. Ambedkar National Institute of Technology Jalandhar, Punjab, India.
+            Mobile : +91 9627273447<br>
+            </p>
+            <p>Email: <a  type="email" href="mailto:anupam@nitj.ac.in" class="link-button">anupam@nitj.ac.in</a></p>
+       
       </div>
       <div>
         <h3 class="text-lg font-medium mb-4">Quick Links</h3>
-        <p><a href="https://www.nitj.ac.in" class="link-button">Official Website</a></p>
-        <p><a href="https://www.nitj.ac.in/events" class="link-button">Events</a></p>
+        <p><a href="#" class="link-button">Events</a></p>
+        <p><a href="https://departments.nitj.ac.in/dept/ma/Home" class="link-button">Official Website</a></p>
+        
+        <p>Email: <a  type="email" href="mailto:evolml@nitj.ac.in" class="link-button">evolml@nitj.ac.in</a></p>
+        <p>Phone: +91-000000000</p>
       </div>
       <div>
         <h3 class="text-lg font-medium mb-4">Follow Us</h3>
@@ -664,23 +608,19 @@ button:active {
     </div>
     <p class="text-center text-gray-500 mt-8 text-sm">© 2025 NIT Jalandhar. All rights reserved.</p>
   </footer>
-
-  <!-- PDF.js Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   <script>
     const url = 'pdfs/schedule.pdf';
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
     let pdfDoc = null,
         pageNum = 1,
         canvas = document.getElementById('pdf-render'),
-        ctx = canvas.getContext('2d'),
-        errorMessage = document.getElementById('error-message');
+        ctx = canvas.getContext('2d');
 
     function renderPage(num) {
       pdfDoc.getPage(num).then(function(page) {
-        const scale = window.innerWidth < 768 ? 1.0 : 1.5;
-        const viewport = page.getViewport({ scale: scale });
+        const viewport = page.getViewport({ scale: 1.5 });
         canvas.height = viewport.height;
         canvas.width = viewport.width;
 
@@ -690,11 +630,7 @@ button:active {
         };
         page.render(renderContext).promise.then(function () {
           document.getElementById('page-num').textContent = num;
-          errorMessage.classList.add('hidden');
         });
-      }).catch(function(error) {
-        console.error('Error rendering page:', error);
-        errorMessage.classList.remove('hidden');
       });
     }
 
@@ -702,9 +638,6 @@ button:active {
       pdfDoc = pdfDoc_;
       document.getElementById('page-count').textContent = pdfDoc.numPages;
       renderPage(pageNum);
-    }).catch(function(error) {
-      console.error('Error loading PDF:', error);
-      errorMessage.classList.remove('hidden');
     });
 
     document.getElementById('next-page').addEventListener('click', function () {
