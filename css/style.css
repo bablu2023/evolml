@@ -111,12 +111,12 @@ body {
     gap: 1.5rem;
   }
   .speaker-card {
-  background: #D3D3D3;
+  background: #f5f5f5;
       width: 280px;
-      height: 400px;
+      height: 380px;
       border-radius: 8px;
       text-align: center;
-      padding: 0.5rem;
+      padding: 0.3rem;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -124,8 +124,8 @@ body {
       align-items: center;
     }
     .speaker-card img {
-      width: 250px;
-      height: 265px;
+      width: 280px;
+      height: 280px;
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 0.5rem;
