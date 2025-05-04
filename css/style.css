@@ -169,8 +169,8 @@ body {
   #student-cards .student-card {
     background-color: #fff;
     border: 2px solid #3a7ca5;
-    width: 250px;
-    height: 320px;
+    width: 240px;
+    height: 280px;
     display: flex;
     flex-direction: column;
     justify-content: center;
